@@ -1,0 +1,25 @@
+{
+  "alert_id": "EAS-{{timestamp}}-{{alert_type}}",
+  "event_code": "{{event_code}}",
+  "event_description": "{{event_description}}",
+  "originator_code": "{{originator_code}}",
+  "duration_minutes": {{duration}},
+  "timestamp": "{{timestamp}}",
+  "effective_date": "{{effective_date}}",
+  "expiration_date": "{{expiration_date}}",
+  "affected_areas": [
+    {
+      "state": "{{state_code}}",
+      "counties": ["{{county_fips}}", "..."],
+      "coverage_percentage": {{coverage_pct}}
+    }
+  ],
+  "severity": "{{severity}}",
+  "urgency": "{{urgency}}",
+  "certainty": "{{certainty}}",
+  "headline": "{{headline}}",
+  "description": "{{description}}",
+  "instruction": "{{instruction}}",
+  "contact": "{{contact_info}}",
+  "web_resources": ["{{url1}}", "{{url2}}"]
+}

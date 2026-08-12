@@ -1,0 +1,88 @@
+{
+  "weather_events": {
+    "TOR": {
+      "name": "Tornado Warning",
+      "severity": "Extreme",
+      "urgency": "Immediate",
+      "code": "TOR",
+      "duration_minutes": 30,
+      "description": "A tornado has been sighted or indicated by weather radar.",
+      "safety_instructions": "Move to an interior room on the lowest floor of a sturdy building. Avoid windows. If in a mobile home, evacuate immediately."
+    },
+    "SVR": {
+      "name": "Severe Thunderstorm Warning",
+      "severity": "Severe",
+      "urgency": "Immediate",
+      "code": "SVR",
+      "duration_minutes": 60,
+      "description": "Severe thunderstorms are expected with damaging winds, large hail, and/or tornadoes.",
+      "safety_instructions": "Take shelter in a sturdy building. Stay away from windows. If outdoors, move away from trees and metal objects."
+    },
+    "FFW": {
+      "name": "Flash Flood Warning",
+      "severity": "Severe",
+      "urgency": "Immediate",
+      "code": "FFW",
+      "duration_minutes": 60,
+      "description": "Flooding is imminent or already occurring in specified areas.",
+      "safety_instructions": "Move to higher ground immediately. Do not attempt to cross flooded roads or streams. Turn around - don't drown."
+    },
+    "WSW": {
+      "name": "Winter Storm Warning",
+      "severity": "Severe",
+      "urgency": "Expected",
+      "code": "WSW",
+      "duration_minutes": 480,
+      "description": "Heavy snow, ice, or blizzard conditions are expected.",
+      "safety_instructions": "Avoid travel. If travel is necessary, use extreme caution and keep emergency supplies in vehicle."
+    },
+    "EWW": {
+      "name": "Extreme Wind Warning",
+      "severity": "Extreme",
+      "urgency": "Immediate",
+      "code": "EWW",
+      "duration_minutes": 45,
+      "description": "Extreme winds capable of producing significant damage are occurring or imminent.",
+      "safety_instructions": "Secure loose objects. Stay indoors and away from windows. Be prepared for widespread power outages."
+    },
+    "EXT": {
+      "name": "Extreme Temperature Warning",
+      "severity": "Severe",
+      "urgency": "Expected",
+      "code": "EXT",
+      "duration_minutes": 240,
+      "description": "Dangerously hot or cold temperatures are expected.",
+      "safety_instructions": "Limit outdoor exposure. Drink plenty of water. Check on vulnerable individuals. Use air conditioning or heating as needed."
+    }
+  },
+  "us_regions": [
+    {
+      "region": "Northeast",
+      "states": ["ME", "NH", "VT", "MA", "RI", "CT", "NY", "NJ", "PA"]
+    },
+    {
+      "region": "Southeast",
+      "states": ["VA", "WV", "KY", "TN", "NC", "SC", "GA", "FL", "AL", "MS", "LA", "AR"]
+    },
+    {
+      "region": "Midwest",
+      "states": ["OH", "IN", "IL", "MI", "WI", "MN", "IA", "MO"]
+    },
+    {
+      "region": "Great Plains",
+      "states": ["ND", "SD", "NE", "KS", "OK", "TX"]
+    },
+    {
+      "region": "Mountain West",
+      "states": ["MT", "WY", "CO", "UT", "NV", "ID"]
+    },
+    {
+      "region": "Southwest",
+      "states": ["AZ", "NM"]
+    },
+    {
+      "region": "West Coast",
+      "states": ["WA", "OR", "CA"]
+    }
+  ]
+}
