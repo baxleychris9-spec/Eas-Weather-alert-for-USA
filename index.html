@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EAS Weather Alert System - Interactive Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            animation: slideDown 0.6s ease-out;
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .feature-item {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .feature-item h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .feature-item h3::before {
+            content: "✓";
+            display: inline-block;
+            width: 25px;
+            height: 25px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 25px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .feature-item p {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .alert-types {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            margin-bottom: 40px;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .alert-types h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .alert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .alert-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .alert-card:hover {
+            transform: scale(1.05);
+        }
+
+        .alert-card .code {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .alert-card .name {
+            font-size: 0.95em;
+            opacity: 0.9;
+        }
+
+        .get-started {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            margin-bottom: 40px;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .get-started h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .get-started ol {
+            margin-left: 20px;
+            color: #666;
+            line-height: 2;
+        }
+
+        .get-started li {
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+
+        .code-block {
+            background: #f5f5f5;
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            overflow-x: auto;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.95em;
+            margin-top: 10px;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            padding: 30px;
+            opacity: 0.8;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            margin-top: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 5px;
+            transition: background 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: rgba(255,255,255,0.5);
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+            margin-bottom: 20px;
+            color: #856404;
+        }
+
+        .demo-features {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            margin-bottom: 40px;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .demo-features h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-list-item {
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+        }
+
+        .feature-list-item h4 {
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .feature-list-item p {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>🚨 EAS Weather Alert System</h1>
+            <p>Emergency Alert System for Severe Weather in the USA</p>
+        </header>
+
+        <!-- Navigation Links -->
+        <div class="nav-links">
+            <a href="#about">About</a>
+            <a href="#features">Features</a>
+            <a href="#alerts">Alert Types</a>
+            <a href="#demo">Live Demo</a>
+            <a href="#getting-started">Getting Started</a>
+            <a href="https://github.com/baxleychris9-spec/Eas-Weather-alert-for-USA" target="_blank">GitHub Repo</a>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="stats">
+            <div class="stat-box">
+                <div class="stat-number">8</div>
+                <div class="stat-label">Alert Types</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">50</div>
+                <div class="stat-label">US States</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">4</div>
+                <div class="stat-label">Severity Levels</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Python-Based</div>
+            </div>
+        </div>
+
+        <!-- About Section -->
+        <section id="about">
+            <div class="card">
+                <h2>About This Project</h2>
+                <p>
+                    The EAS Weather Alert System is a comprehensive solution for generating and managing Emergency Alert System (EAS) notifications for severe weather events across the United States. Built with Python, it provides real-time alert generation, severity classification, and multi-state coverage.
+                </p>
+                <p>
+                    This system is designed to help meteorologists, emergency managers, and weather services communicate critical weather information to the public quickly and effectively.
+                </p>
+            </div>
+        </section>
+
+        <!-- Highlight Box -->
+        <div class="highlight">
+            <strong>📱 Chromebook Ready:</strong> This system is optimized for Chromebook Linux environments. Clone the repo and run the live demo directly from your terminal with no internet required after setup!
+        </div>
+
+        <!-- Features Section -->
+        <section id="features">
+            <h2 style="color: white; text-align: center; margin-bottom: 30px; font-size: 2em;">Key Features</h2>
+            <div class="features">
+                <div class="feature-item">
+                    <h3>Real-Time Alert Generation</h3>
+                    <p>Create weather alerts instantly with customizable parameters including severity, urgency, and affected areas.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>Multiple Event Types</h3>
+                    <p>Support for 8 different severe weather event codes including tornadoes, thunderstorms, floods, and more.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>Geographic Targeting</h3>
+                    <p>Specify affected states and counties using FIPS codes for precise alert distribution.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>JSON Export</h3>
+                    <p>Export alerts to JSON format for integration with other systems and long-term storage.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>Alert Management</h3>
+                    <p>Track active alerts, cancel outdated warnings, and maintain alert history.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>Offline Compatible</h3>
+                    <p>Works completely offline after initial setup. Perfect for field operations and remote areas.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Alert Types Section -->
+        <section id="alerts" class="alert-types">
+            <h2>Supported Alert Types</h2>
+            <div class="alert-grid">
+                <div class="alert-card">
+                    <div class="code">TOR</div>
+                    <div class="name">Tornado Warning</div>
+                </div>
+                <div class="alert-card">
+                    <div class="code">SVR</div>
+                    <div class="name">Severe Thunderstorm</div>
+                </div>
+                <div class="alert-card">
+                    <div class="code">FFW</div>
+                    <div class="name">Flash Flood Warning</div>
+                </div>
+                <div class="alert-card">
+                    <div class="code">WSW</div>
+                    <div class="name">Winter Storm Warning</div>
+                </div>
+                <div class="alert-card">
+                    <div class="code">EWW</div>
+                    <div class="name">Extreme Wind Warning</div>
+                </div>
+                <div class="alert-card">
+                    <div class="code">EXT</div>
+                    <div class="name">Extreme Temperature</div>
+                </div>
+                <div class="alert-card">
+                    <div class="code">DSW</div>
+                    <div class="name">Dust Storm Warning</div>
+                </div>
+                <div class="alert-card">
+                    <div class="code">HSW</div>
+                    <div class="name">Heavy Snow Warning</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Live Demo Section -->
+        <section id="demo" class="demo-features">
+            <h2>Interactive Live Demo</h2>
+            <p style="color: #666; margin-bottom: 20px;">
+                The interactive live demo provides a complete interface for exploring the EAS Weather Alert System. Try out pre-built alerts or create custom ones!
+            </p>
+            <div class="feature-list">
+                <div class="feature-list-item">
+                    <h4>🌪️ Pre-Built Alerts</h4>
+                    <p>Quickly create 5 different alert types with one click to see the system in action.</p>
+                </div>
+                <div class="feature-list-item">
+                    <h4>⚙️ Custom Alerts</h4>
+                    <p>Build your own alerts by selecting event type, severity, states, and instructions.</p>
+                </div>
+                <div class="feature-list-item">
+                    <h4>👁️ View Alerts</h4>
+                    <p>See all active alerts displayed with full details and color-coded formatting.</p>
+                </div>
+                <div class="feature-list-item">
+                    <h4>💾 Export to JSON</h4>
+                    <p>Save alerts to files for sharing, analysis, or integration with other systems.</p>
+                </div>
+                <div class="feature-list-item">
+                    <h4>🔴 Cancel Alerts</h4>
+                    <p>Manage active alerts by canceling outdated warnings when conditions change.</p>
+                </div>
+                <div class="feature-list-item">
+                    <h4>📚 Sample Alerts</h4>
+                    <p>Browse sample alert types to understand the system structure and capabilities.</p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="#getting-started" class="btn">Start the Demo</a>
+            </div>
+        </section>
+
+        <!-- Getting Started Section -->
+        <section id="getting-started" class="get-started">
+            <h2>🚀 Getting Started</h2>
+
+            <h3 style="color: #667eea; margin-top: 20px; margin-bottom: 15px;">For Chromebook Users:</h3>
+            <ol>
+                <li><strong>Enable Linux (Beta):</strong> Open Settings → Advanced → Developers → Linux development environment</li>
+                <li><strong>Open Terminal:</strong> Press Ctrl + Alt + T</li>
+                <li><strong>Clone Repository:</strong>
+                    <div class="code-block">git clone https://github.com/baxleychris9-spec/Eas-Weather-alert-for-USA.git<br>cd Eas-Weather-alert-for-USA</div>
+                </li>
+                <li><strong>Install Dependencies:</strong>
+                    <div class="code-block">sudo apt update<br>sudo apt install -y python3</div>
+                </li>
+                <li><strong>Run Live Demo:</strong>
+                    <div class="code-block">python3 live_demo.py</div>
+                </li>
+                <li><strong>Follow the Interactive Menu:</strong> Select options 1-11 to explore features</li>
+            </ol>
+
+            <h3 style="color: #667eea; margin-top: 30px; margin-bottom: 15px;">For All Users:</h3>
+            <ol>
+                <li><strong>Clone the Repository:</strong>
+                    <div class="code-block">git clone https://github.com/baxleychris9-spec/Eas-Weather-alert-for-USA.git</div>
+                </li>
+                <li><strong>Navigate to Project:</strong>
+                    <div class="code-block">cd Eas-Weather-alert-for-USA</div>
+                </li>
+                <li><strong>Ensure Python 3.7+ is Installed</strong></li>
+                <li><strong>Run the Live Demo:</strong>
+                    <div class="code-block">python3 live_demo.py</div>
+                </li>
+            </ol>
+
+            <h3 style="color: #667eea; margin-top: 30px; margin-bottom: 15px;">Quick Test (Without Demo):</h3>
+            <div class="code-block">python3 src/alert_generator.py</div>
+
+            <h3 style="color: #667eea; margin-top: 30px; margin-bottom: 15px;">Documentation:</h3>
+            <ul style="margin-left: 20px; color: #666; line-height: 2;">
+                <li><a href="https://github.com/baxleychris9-spec/Eas-Weather-alert-for-USA/blob/main/README.md" target="_blank" style="color: #667eea;">📖 README - Project Overview</a></li>
+                <li><a href="https://github.com/baxleychris9-spec/Eas-Weather-alert-for-USA/blob/main/docs/GETTING_STARTED.md" target="_blank" style="color: #667eea;">🎯 Getting Started Guide</a></li>
+                <li><a href="https://github.com/baxleychris9-spec/Eas-Weather-alert-for-USA/blob/main/docs/CHROMEBOOK_REVIEW.md" target="_blank" style="color: #667eea;">📱 Chromebook Review Guide</a></li>
+                <li><a href="https://github.com/baxleychris9-spec/Eas-Weather-alert-for-USA/blob/main/docs/OFFLINE_REVIEW.md" target="_blank" style="color: #667eea;">🔌 Offline Review Guide</a></li>
+            </ul>
+        </section>
+
+        <!-- Main Content Grid -->
+        <div class="main-content">
+            <div class="card">
+                <h2>📚 Documentation</h2>
+                <p>
+                    Comprehensive guides for getting started, running the system offline, and using the Chromebook-optimized interface.
+                </p>
+                <a href="https://github.com/baxleychris9-spec/Eas-Weather-alert-for-USA/tree/main/docs" target="_blank" class="btn">View Docs</a>
+            </div>
+
+            <div class="card">
+                <h2>💻 Source Code</h2>
+                <p>
+                    Well-organized Python code with clear structure, comprehensive configuration files, and alert templates ready to use.
+                </p>
+                <a href="https://github.com/baxleychris9-spec/Eas-Weather-alert-for-USA" target="_blank" class="btn">View Code</a>
+            </div>
+
+            <div class="card">
+                <h2>🎮 Live Demo</h2>
+                <p>
+                    Interactive terminal-based demo with colorful output, real-time alert creation, and JSON export capabilities.
+                </p>
+                <a href="#getting-started" class="btn">Run Demo</a>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p><strong>EAS Weather Alert System</strong></p>
+            <p>Emergency Alert System for Severe Weather in the USA</p>
+            <p style="margin-top: 20px; font-size: 0.9em;">
+                © 2026 baxleychris9-spec | 
+                <a href="https://github.com/baxleychris9-spec/Eas-Weather-alert-for-USA" target="_blank" style="color: white; text-decoration: underline;">GitHub Repository</a>
+            </p>
+            <p style="margin-top: 10px; font-size: 0.85em; opacity: 0.7;">
+                Built with Python | Optimized for Chromebook | Offline Compatible
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
